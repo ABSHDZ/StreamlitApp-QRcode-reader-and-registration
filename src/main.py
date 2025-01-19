@@ -1,5 +1,6 @@
 import streamlit as st
 import pyzbar
+import cv2
 
 enable = st.checkbox("Enable camera")
 picture = st.camera_input("Take a picture", disabled=not enable)
