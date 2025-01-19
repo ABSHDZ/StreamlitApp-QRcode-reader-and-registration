@@ -45,7 +45,7 @@ if uploaded_file is not None:
     else:
         st.write("No QR code found in the image.")
 
-if submit_button("Registrer"):
+if st.button("Registrer"):
     st.cache_data.clear()
     registrer = conn.read(worksheet="Sabado")
     if Nombre in registrer["NombreCompleto"].values:
