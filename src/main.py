@@ -15,7 +15,7 @@ df = pd.DataFrame(existing_data)
 # Picture
 uploaded_file = st.camera_input("Take a picture")
 Nombre = "Hola"
-aux = False
+aux = True
 
 def get_payment_for_name(df, name_to_check):
     st.cache_data.clear()
@@ -43,7 +43,7 @@ if uploaded_file is not None:
     # Display the result
     if data:
         Nombre = data
-        aux = True
+        aux = False
         st.write("QR Code Data:", data)
         checkingPay = get_payment_for_name(df, data)
         if checkingPay is not None:
