@@ -14,6 +14,7 @@ registrer = conn.read(worksheet="Sabado")
 df = pd.DataFrame(existing_data)
 # Picture
 uploaded_file = st.camera_input("Take a picture")
+Nombre = "Hola"
 
 def get_payment_for_name(df, name_to_check):
     # Check if the name exists in the NameList column
@@ -36,6 +37,7 @@ if uploaded_file is not None:
     data, points, _ = detector.detectAndDecode(gray_image)
     # Display the result
     if data:
+        Nombre = data
         st.write("QR Code Data:", data)
         checkingPay = get_payment_for_name(df, data)
         if checkingPay is not None:
