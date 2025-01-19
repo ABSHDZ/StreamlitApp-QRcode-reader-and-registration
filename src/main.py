@@ -14,7 +14,6 @@ registrer = conn.read(worksheet="Sabado")
 registrer2 = conn.read(worksheet="Sabado2")
 df = pd.DataFrame(existing_data)
 # Picture
-enable = st.checkbox("Enable camera")
 uploaded_file = st.camera_input("Take a picture", disabled=not enable)
 Nombre = "Hola"
 
