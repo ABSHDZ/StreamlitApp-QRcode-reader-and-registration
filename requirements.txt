@@ -3,3 +3,5 @@ pandas
 st-gsheets-connection
 qreader
 pillow
+opencv-python-headless
+numpy
