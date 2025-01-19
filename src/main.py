@@ -17,6 +17,10 @@ uploaded_file = st.camera_input("Take a picture")
 Nombre = "Hola"
 
 def get_payment_for_name(df, name_to_check):
+    st.cache_data.clear()
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    existing_data = conn.read(worksheet="DatosForms")
+    df = pd.DataFrame(existing_data)
     # Check if the name exists in the NameList column
     if name_to_check in df['NombreCompleto'].values:
         # Find the index of the row where the name matches
