@@ -54,7 +54,6 @@ if uploaded_file is not None:
 
 def registrerABS():
     if st.button("Registrer"):
-        st.cache_data.clear()
         registrer = conn.read(worksheet="Sabado")
         if Nombre in registrer["NombreCompleto"].values:
             st.warning("AlreadyExist")
