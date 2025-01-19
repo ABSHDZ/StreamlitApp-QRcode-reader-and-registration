@@ -1,5 +1,7 @@
 streamlit
 pandas
 st-gsheets-connection
-qreader
-opencv-python
+qrtools
+pypng
+zbar
+pillow
