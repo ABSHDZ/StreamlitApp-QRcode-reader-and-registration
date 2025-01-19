@@ -7,6 +7,8 @@ from PIL import Image
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 
+enable = st.checkbox("Enable camera")
+
 #Read google sheet
 conn = st.connection("gsheets", type=GSheetsConnection)
 existing_data = conn.read(worksheet="DatosForms")
