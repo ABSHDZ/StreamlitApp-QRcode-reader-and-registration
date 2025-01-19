@@ -15,6 +15,7 @@ df = pd.DataFrame(existing_data)
 # Picture
 uploaded_file = st.camera_input("Take a picture")
 Nombre = "Hola"
+aux = False
 
 def get_payment_for_name(df, name_to_check):
     st.cache_data.clear()
@@ -42,24 +43,23 @@ if uploaded_file is not None:
     # Display the result
     if data:
         Nombre = data
+        aux = True
         st.write("QR Code Data:", data)
         checkingPay = get_payment_for_name(df, data)
         if checkingPay is not None:
             st.success(f"Payment for {data}: {checkingPay}")
         else:
             st.warning(f"{data} not found in the NameList.")
-        registrerABS()
     else:
         st.write("No QR code found in the image.")
 
-def registrerABS():
-    if st.button("Registrer"):
-        registrer = conn.read(worksheet="Sabado")
-        if Nombre in registrer["NombreCompleto"].values:
-            st.warning("AlreadyExist")
-            st.stop()
-        else:
-            new_to_add = pd.DataFrame([{"NombreCompleto": Nombre}])
-            update_row = pd.concat([registrer, new_to_add], ignore_index=False)
-            conn.update(worksheet="Sabado", data=update_row)
-            st.success("Data updated successfully")
+if st.button("Registrer", disabled=aux):
+    registrer = conn.read(worksheet="Sabado")
+    if Nombre in registrer["NombreCompleto"].values:
+        st.warning("AlreadyExist")
+        st.stop()
+    else:
+        new_to_add = pd.DataFrame([{"NombreCompleto": Nombre}])
+        update_row = pd.concat([registrer, new_to_add], ignore_index=False)
+        conn.update(worksheet="Sabado", data=update_row)
+        st.success("Data updated successfully")
