@@ -10,9 +10,6 @@ import pandas as pd
 #Read google sheet
 conn = st.connection("gsheets", type=GSheetsConnection)
 existing_data = conn.read(worksheet="DatosForms")
-# Convert to pandas DataFrame
-df = pd.DataFrame(existing_data)
-
 name_to_check = "Hola"
 
 # Picture
@@ -47,11 +44,10 @@ if uploaded_file is not None:
     else:
         st.write("No QR code found in the image.")
 
-
-
 if st.button("Validate and Update"):
     st.cache_data.clear()
     existing_data = conn.read(worksheet="DatosForms")
+    df = pd.DataFrame(existing_data)
     updated = validate_and_update_name(df, name_to_check)
     if updated:
         # Write the updated DataFrame back to the Google Sheet
