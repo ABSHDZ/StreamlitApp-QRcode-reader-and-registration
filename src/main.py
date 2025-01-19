@@ -32,6 +32,7 @@ def get_payment_for_name(df, name_to_check):
         return None  # Name not found
 
 def registerABS():
+    st.cache_data.clear()
     conn = st.connection("gsheets", type=GSheetsConnection)
     registrer = conn.read(worksheet="Sabado")
     if Nombre in registrer["NombreCompleto"].values:
@@ -44,6 +45,7 @@ def registerABS():
         st.success("Data updated successfully")
 
 def registerABS2():
+    st.cache_data.clear()
     conn = st.connection("gsheets", type=GSheetsConnection)
     registrer2 = conn.read(worksheet="Sabado2")
     if Nombre in registrer2["NombreCompleto"].values:
