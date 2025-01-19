@@ -51,7 +51,7 @@ if st.button("Validate and Update"):
     updated = validate_and_update_name(df, name_to_check)
     if updated:
         # Write the updated DataFrame back to the Google Sheet
-        conn.write(df, worksheet=worksheet_name)
+        conn.write(df, worksheet="DatosForms")
         st.success(f"Payment status updated for {name_to_check}.")
     else:
         st.warning(f"No update needed for {name_to_check} (name not found or already paid).")
