@@ -2,5 +2,5 @@ streamlit
 pandas
 st-gsheets-connection
 pyzbar
+pyzbar[scripts]
 pillow
-libzbar0
