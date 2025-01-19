@@ -11,6 +11,7 @@ import pandas as pd
 conn = st.connection("gsheets", type=GSheetsConnection)
 existing_data = conn.read(worksheet="DatosForms")
 registrer = conn.read(worksheet="Sabado")
+registrer2 = conn.read(worksheet="Sabado2")
 df = pd.DataFrame(existing_data)
 # Picture
 uploaded_file = st.camera_input("Take a picture")
@@ -43,13 +44,13 @@ def registerABS():
 
 def registerABS2():
     conn = st.connection("gsheets", type=GSheetsConnection)
-    registrer = conn.read(worksheet="Sabado2")
-    if Nombre in registrer["NombreCompleto"].values:
+    registrer2 = conn.read(worksheet="Sabado2")
+    if Nombre in registrer2["NombreCompleto"].values:
         st.warning("AlreadyExist")
         st.stop()
     else:
         new_to_add = pd.DataFrame([{"NombreCompleto": Nombre}])
-        update_row = pd.concat([registrer, new_to_add], ignore_index=False)
+        update_row = pd.concat([registrer2, new_to_add], ignore_index=False)
         conn.update(worksheet="Sabado2", data=update_row)
         st.success("Data updated successfully")
 
