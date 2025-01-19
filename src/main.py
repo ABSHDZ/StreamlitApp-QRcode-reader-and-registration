@@ -42,21 +42,21 @@ if uploaded_file is not None:
     # Display the result
     if data:
         st.write("QR Code Data:", data)
+        saveRegister(data)
     else:
         st.write("No QR code found in the image.")
 
-# Input the name to check
-name_to_check = data
 
-if st.button("Validate and Update"):
-    st.cache_data.clear()
-    existing_data = conn.read(worksheet="DatosForms")
-    updated = validate_and_update_name(df, name_to_check)
-    if updated:
-        # Write the updated DataFrame back to the Google Sheet
-        conn.write(df, worksheet=worksheet_name)
-        st.success(f"Payment status updated for {name_to_check}.")
-    else:
-        st.warning(f"No update needed for {name_to_check} (name not found or already paid).")
+def saveRegister(name_to_check = "Hola"):
+    if st.button("Validate and Update"):
+        st.cache_data.clear()
+        existing_data = conn.read(worksheet="DatosForms")
+        updated = validate_and_update_name(df, name_to_check)
+        if updated:
+            # Write the updated DataFrame back to the Google Sheet
+            conn.write(df, worksheet=worksheet_name)
+            st.success(f"Payment status updated for {name_to_check}.")
+        else:
+            st.warning(f"No update needed for {name_to_check} (name not found or already paid).")
 
 
