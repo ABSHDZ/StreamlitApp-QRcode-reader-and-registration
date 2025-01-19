@@ -29,6 +29,30 @@ def get_payment_for_name(df, name_to_check):
     else:
         return None  # Name not found
 
+def registerABS():
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    registrer = conn.read(worksheet="Sabado")
+    if Nombre in registrer["NombreCompleto"].values:
+        st.warning("AlreadyExist")
+        st.stop()
+    else:
+        new_to_add = pd.DataFrame([{"NombreCompleto": Nombre}])
+        update_row = pd.concat([registrer, new_to_add], ignore_index=False)
+        conn.update(worksheet="Sabado", data=update_row)
+        st.success("Data updated successfully")
+
+def registerABS2():
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    registrer = conn.read(worksheet="Sabado2")
+    if Nombre in registrer["NombreCompleto"].values:
+        st.warning("AlreadyExist")
+        st.stop()
+    else:
+        new_to_add = pd.DataFrame([{"NombreCompleto": Nombre}])
+        update_row = pd.concat([registrer, new_to_add], ignore_index=False)
+        conn.update(worksheet="Sabado2", data=update_row)
+        st.success("Data updated successfully")
+
 if uploaded_file is not None:
     # Convert the uploaded image to a format suitable for OpenCV
     image = Image.open(uploaded_file)
@@ -46,18 +70,9 @@ if uploaded_file is not None:
         checkingPay = get_payment_for_name(df, data)
         if checkingPay is not None:
             st.success(f"Payment for {data}: {checkingPay}")
+            registerABS()
         else:
             st.warning(f"{data} not found in the NameList.")
-            st.cache_data.clear()
-        conn = st.connection("gsheets", type=GSheetsConnection)
-        registrer = conn.read(worksheet="Sabado")
-        if Nombre in registrer["NombreCompleto"].values:
-            st.warning("AlreadyExist")
-            st.stop()
-        else:
-            new_to_add = pd.DataFrame([{"NombreCompleto": Nombre}])
-            update_row = pd.concat([registrer, new_to_add], ignore_index=False)
-            conn.update(worksheet="Sabado", data=update_row)
-            st.success("Data updated successfully")
+            registerABS2()
     else:
         st.write("No QR code found in the image.")
