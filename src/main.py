@@ -1,14 +1,15 @@
 import streamlit as st
-import pyzbar
+from qreader import QReader
 import cv2
 
 enable = st.checkbox("Enable camera")
 picture = st.camera_input("Take a picture", disabled=not enable)
 
 def readQRcodePicture():
-    image = cv2.imread(picture)
-    decoded = pyzbar.decode(image)
-    st.text(decoded.data)
+    qreader = QReader()
+    image = cv2.cvtColor(cv2.imread(picture), cv2.COLOR_BGR2RGB)
+    decoded_text = qreader.detect_and_decode(image=image)
+    st.text(decoded_text[0])
 
 if picture:
     readQRcodePicture()
