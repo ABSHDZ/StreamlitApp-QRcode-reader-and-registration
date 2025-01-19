@@ -10,12 +10,11 @@ import pandas as pd
 #Read google sheet
 conn = st.connection("gsheets", type=GSheetsConnection)
 existing_data = conn.read(worksheet="DatosForms")
+# Convert to pandas DataFrame
+df = pd.DataFrame(existing_data)
 
 # Picture
 uploaded_file = st.camera_input("Take a picture")
-
-# Convert to pandas DataFrame
-df = pd.DataFrame(existing_data)
 
 def validate_and_update_name(df, name_to_check):
     # Check if the name exists in the NombreCompleto column
@@ -28,6 +27,18 @@ def validate_and_update_name(df, name_to_check):
             df.at[idx, 'Payment'] = "Paid"  # Update the value
             return True  # Indicate that an update was made
     return False  # No update needed
+
+def saveRegister(name_to_check = "Hola"):
+    if st.button("Validate and Update"):
+        st.cache_data.clear()
+        existing_data = conn.read(worksheet="DatosForms")
+        updated = validate_and_update_name(df, name_to_check)
+        if updated:
+            # Write the updated DataFrame back to the Google Sheet
+            conn.write(df, worksheet=worksheet_name)
+            st.success(f"Payment status updated for {name_to_check}.")
+        else:
+            st.warning(f"No update needed for {name_to_check} (name not found or already paid).")
 
 if uploaded_file is not None:
     # Convert the uploaded image to a format suitable for OpenCV
@@ -46,17 +57,5 @@ if uploaded_file is not None:
     else:
         st.write("No QR code found in the image.")
 
-
-def saveRegister(name_to_check = "Hola"):
-    if st.button("Validate and Update"):
-        st.cache_data.clear()
-        existing_data = conn.read(worksheet="DatosForms")
-        updated = validate_and_update_name(df, name_to_check)
-        if updated:
-            # Write the updated DataFrame back to the Google Sheet
-            conn.write(df, worksheet=worksheet_name)
-            st.success(f"Payment status updated for {name_to_check}.")
-        else:
-            st.warning(f"No update needed for {name_to_check} (name not found or already paid).")
 
 
