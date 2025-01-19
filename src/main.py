@@ -28,7 +28,6 @@ if uploaded_file is not None:
     # Display the result
     if data:
         st.write("QR Code Data:", data)
-        name_to_check = data
     else:
         st.write("No QR code found in the image.")
 
