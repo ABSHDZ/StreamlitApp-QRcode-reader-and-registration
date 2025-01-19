@@ -54,7 +54,7 @@ if st.button("Registrer"):
         st.warning("AlreadyExist")
         st.stop()
     else:
-        new_to_add = pd.DataFrame([{"NombreCompleto": data}])
+        new_to_add = pd.DataFrame([{"NombreCompleto": Nombre}])
         update_row = pd.concat([registrer, new_row], ignore_index=False)
         conn.update(worksheet="Sabado", data=update_row)
         st.success("Data updated successfully")
