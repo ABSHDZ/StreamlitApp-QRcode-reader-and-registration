@@ -18,10 +18,10 @@ uploaded_file = st.camera_input("Take a picture")
 df = pd.DataFrame(existing_data)
 
 def validate_and_update_name(df, name_to_check):
-    # Check if the name exists in the NameList column
-    if name_to_check in df['NameList'].values:
+    # Check if the name exists in the NombreCompleto column
+    if name_to_check in df['NombreCompleto'].values:
         # Find the index of the row where the name matches
-        idx = df[df['NameList'] == name_to_check].index[0]
+        idx = df[df['NombreCompleto'] == name_to_check].index[0]
 
         # Check if the Payment column is empty
         if df.at[idx, 'Payment'] == "":
