@@ -52,14 +52,13 @@ if uploaded_file is not None:
     else:
         st.write("No QR code found in the image.")
 
-def registrerABS():
-    if st.button("Registrer"):
-        registrer = conn.read(worksheet="Sabado")
-        if Nombre in registrer["NombreCompleto"].values:
-            st.warning("AlreadyExist")
-            st.stop()
-        else:
-            new_to_add = pd.DataFrame([{"NombreCompleto": Nombre}])
-            update_row = pd.concat([registrer, new_to_add], ignore_index=False)
-            conn.update(worksheet="Sabado", data=update_row)
-            st.success("Data updated successfully")
+if st.button("Registrer"):
+    registrer = conn.read(worksheet="Sabado")
+    if Nombre in registrer["NombreCompleto"].values:
+        st.warning("AlreadyExist")
+        st.stop()
+    else:
+        new_to_add = pd.DataFrame([{"NombreCompleto": Nombre}])
+        update_row = pd.concat([registrer, new_to_add], ignore_index=False)
+        conn.update(worksheet="Sabado", data=update_row)
+        st.success("Data updated successfully")
